@@ -8,9 +8,7 @@ const client = axios.create({
   },
 });
 
-if (import.meta.env.VITE_USE_MOCK === 'true') {
-  import('./mock.js').then(({ setupMock }) => setupMock(client));
-}
+const isMock = import.meta.env.VITE_USE_MOCK === 'true';
 
 client.interceptors.request.use((config) => {
   const token = getToken();
@@ -30,5 +28,9 @@ client.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+if (isMock) {
+  import('./mock.js').then(({ setupMock }) => setupMock(client));
+}
 
 export default client;
