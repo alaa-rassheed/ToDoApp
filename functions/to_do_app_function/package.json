@@ -1,0 +1,9 @@
+{
+	"name": "to_do_app_function",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "user1@demo1.wanasapps.com",
+	"dependencies": {
+		"zcatalyst-sdk-node": "latest"
+	}
+}

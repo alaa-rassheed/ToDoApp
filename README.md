@@ -1,16 +1,70 @@
-# React + Vite
+# Todo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite Todo application with Zoho Catalyst integration.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+/
+├── catalyst.json              # Catalyst project config
+├── .catalystrc                # Catalyst CLI auth (gitignored)
+├── .env                       # Root Catalyst env vars
+├── react-app/                 # React frontend
+│   ├── package.json
+│   ├── client-package.json    # Catalyst client config
+│   ├── vite.config.js
+│   ├── .env                   # React app env vars
+│   ├── src/
+│   │   ├── api/               # Axios client + API modules
+│   │   ├── components/        # Reusable UI components
+│   │   ├── context/           # Auth context
+│   │   ├── hooks/             # useAuth, useTodos
+│   │   ├── pages/             # Login, Signup, Dashboard, Todos
+│   │   ├── routes/            # App routing + protected routes
+│   │   ├── services/          # Auth & todo services
+│   │   ├── utils/             # Constants, helpers, storage
+│   │   ├── catalyst.js        # Catalyst Web SDK init
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── index.html
+├── functions/
+│   └── to_do_app_function/    # Serverless API function
+│       ├── index.js           # Auth + Todo API handlers
+│       ├── package.json
+│       └── catalyst-config.json
+└── .build/                    # Catalyst build output
+```
 
-## React Compiler
+## Development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+cd react-app
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Mock Mode
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+With `VITE_USE_MOCK=true` in `react-app/.env`, the app runs without a backend:
+
+- **Login:** `test@example.com` / `password`
+- **Signup:** any credentials
+
+## Deployment (Catalyst)
+
+```bash
+zcatalyst deploy client
+zcatalyst deploy function
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/login` | User login |
+| POST | `/auth/signup` | User registration |
+| GET | `/auth/me` | Current user |
+| POST | `/auth/logout` | Logout |
+| GET | `/todos` | List todos |
+| POST | `/todos` | Create todo |
+| PUT | `/todos/:id` | Update todo |
+| DELETE | `/todos/:id` | Delete todo |

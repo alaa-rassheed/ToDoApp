@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "targets": [
+      "to_do_app_function"
+    ],
+    "ignore": [],
+    "source": "functions"
+  },
+  "client": {
+    "source": "react-app",
+    "plugin": "zcatalyst-cli-plugin-react"
+  }
+}
