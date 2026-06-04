@@ -11,6 +11,7 @@ const MOCK_USER = {
 
 function matchRoute(method, url) {
   if (!url) return null;
+  if (method === 'post' && url.endsWith('/auth/signup')) return { handler: 'signup' };
   if (method === 'post' && url.endsWith('/auth/login')) return { handler: 'login' };
   if (method === 'get' && url.endsWith('/auth/me')) return { handler: 'me' };
   if (method === 'post' && url.endsWith('/auth/logout')) return { handler: 'logout' };
@@ -31,6 +32,18 @@ export function setupMock(client) {
     const body = config.data || {};
 
     switch (route.handler) {
+      case 'signup': {
+        const newUser = {
+          id: String(DB.nextId++),
+          name: body.name || 'New User',
+          email: body.email,
+        };
+        config.adapter = () => Promise.resolve({
+          data: { success: true, token: 'mock-jwt-token', user: newUser },
+          status: 201,
+        });
+        break;
+      }
       case 'login': {
         const { email, password } = body;
         if (email === 'test@example.com' && password === 'password') {
