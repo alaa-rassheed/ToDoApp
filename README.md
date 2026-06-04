@@ -42,6 +42,29 @@ cd react-app
 npm run dev
 ```
 
+App runs at `http://localhost:5173/app/`.
+
+## Catalyst Serve (test functions + frontend locally)
+
+```bash
+cd react-app
+npm run build         # builds to .catalyst-dist/
+cd ..
+catalyst serve        # serves client + functions
+```
+
+App at `http://localhost:3000/app/`.
+
+**Hot-reload dev workflow** (separate terminals):
+
+```bash
+# Terminal 1 — Vite dev server with HMR
+cd react-app && npm run dev
+
+# Terminal 2 — Catalyst functions with proxy to Vite
+catalyst serve --only functions --proxy http://localhost:5173
+```
+
 ## Mock Mode
 
 With `VITE_USE_MOCK=true` in `react-app/.env`, the app runs without a backend:
@@ -52,8 +75,9 @@ With `VITE_USE_MOCK=true` in `react-app/.env`, the app runs without a backend:
 ## Deployment (Catalyst)
 
 ```bash
-zcatalyst deploy client
-zcatalyst deploy function
+cd react-app && npm run build
+cd .. && catalyst deploy client
+catalyst deploy function
 ```
 
 ## API Endpoints

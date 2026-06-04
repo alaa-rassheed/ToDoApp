@@ -30,3 +30,4 @@ lerna-debug.log*
 # Catalyst
 .build
 .catalystrc
+.catalyst-dist
